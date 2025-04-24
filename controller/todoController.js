@@ -10,12 +10,14 @@ export const addNewTodo = async (req, res, next) => {
             return next(HttpError.invalidInputs())
         } else {
 
-            const { title, description, status } = req.body
+            const { title, description, completed } = req.body
 
             console.log(req.body, "req from create todo")
 
+        const status = completed ? 'complete' : 'pending';
+
             const newTodoAdd = new Todo({
-                title, description, status: status || 'pending'
+                title, description, status
 
             })
 
@@ -40,7 +42,7 @@ export const addNewTodo = async (req, res, next) => {
     }
 }
 
-// /update book
+// /update todo
 
 
 export const updateTodo = async (req, res, next) => {
@@ -55,7 +57,6 @@ export const updateTodo = async (req, res, next) => {
             const { title, description, status } = req.body
 
 
-            // const { userId, userRole } = req.userData
             const todoId = req.params.id;
 
             const updatesAttributes = {
